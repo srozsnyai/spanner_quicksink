@@ -1,5 +1,7 @@
 # Spanner QuickSink
 
+![App Dashboard Screenshot](./assets/screenshots/quicksink_architecture.png)
+
 Multi-Threaded application to read Google Spanner ChangeStreams and emit them to various sinks (e.g. File, Spanner).
 The app supports the option of using ordering events to ensure transactions can be processed downstream in strict commit order. This is relevant for use cases where one wants to replicate changes with transactional consistency. 
 
