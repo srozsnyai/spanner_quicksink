@@ -117,8 +117,11 @@ public class ChangeStreamReader {
                  }
              }
              
-             dataSink = new BigQuerySink(bigQuery, bqDataset, tableMap);
-             System.out.println("Streaming to BigQuery Dataset: " + bqDataset + " (Project: " + bqProjectId + ")");
+             int bqBatchSize = Integer.parseInt(props.getProperty("sink.bigquery.batchSize", "500").trim());
+             int bqParallelism = Integer.parseInt(props.getProperty("sink.bigquery.parallelism", "4").trim());
+
+             dataSink = new BigQuerySink(bigQuery, bqDataset, tableMap, bqBatchSize, bqParallelism);
+             System.out.println("Streaming to BigQuery Dataset: " + bqDataset + " (Project: " + bqProjectId + ", Batch: " + bqBatchSize + ", Threads: " + bqParallelism + ")");
         } else {
             System.err.println("Unknown sink type: " + sinkType + ". Defaulting to raw JSON file sink.");
         }

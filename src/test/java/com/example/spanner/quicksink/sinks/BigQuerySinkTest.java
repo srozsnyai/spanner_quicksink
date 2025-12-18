@@ -47,7 +47,8 @@ public class BigQuerySinkTest {
         when(bigQuery.getOptions()).thenReturn(bigQueryOptions);
         when(bigQueryOptions.getProjectId()).thenReturn("test-project");
         when(bigQuery.insertAll(any(InsertAllRequest.class))).thenReturn(mock(InsertAllResponse.class));
-        sink = new BigQuerySink(bigQuery, DATASET_NAME);
+        // Use small batch size to trigger flushes easily if needed, or just rely on manual flush()
+        sink = new BigQuerySink(bigQuery, DATASET_NAME, new HashMap<>(), 10, 1);
     }
 
     @Test
@@ -94,7 +95,7 @@ public class BigQuerySinkTest {
         SinkRecord record = new SinkRecord(root); 
 
         sink.write(record);
-        sink.flush();
+        sink.flush(); // This should force the async writer to finish
 
         ArgumentCaptor<InsertAllRequest> captor = ArgumentCaptor.forClass(InsertAllRequest.class);
         verify(bigQuery, times(1)).insertAll(captor.capture());
@@ -117,7 +118,8 @@ public class BigQuerySinkTest {
     public void testTableMapping() {
         Map<String, String> map = new HashMap<>();
         map.put("Users", "RawUsers");
-        sink = new BigQuerySink(bigQuery, DATASET_NAME, map);
+        // Re-init with mapping
+        sink = new BigQuerySink(bigQuery, DATASET_NAME, map, 10, 1);
 
         Struct mod = Struct.newBuilder()
                 .set("keys").to(Value.json("{\"id\": 1}"))

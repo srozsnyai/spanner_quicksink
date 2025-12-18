@@ -93,6 +93,7 @@ public class Metrics {
         Map<Thread, StackTraceElement[]> threads = Thread.getAllStackTraces();
         int partition = 0;
         int spanner = 0;
+        int bigquery = 0;
         int buffer = 0;
         int other = 0;
         
@@ -103,6 +104,8 @@ public class Metrics {
                 partition++;
             } else if (name.startsWith("SpannerSink-Shard-")) {
                 spanner++;
+            } else if (name.startsWith("BQSink-Shard-")) {
+                bigquery++;
             } else if (name.equals("TransactionBufferFlusher")) {
                 buffer++;
             } else if (name.equals("MetricsReporter")) {
@@ -111,7 +114,7 @@ public class Metrics {
                 other++;
             }
         }
-        return String.format("Partitions: %d, Spanner: %d, Buffer: %d, Other: %d", partition, spanner, buffer, other);
+        return String.format("Partitions: %d, Spanner: %d, BigQuery: %d, Buffer: %d, Other: %d", partition, spanner, bigquery, buffer, other);
     }
 
     public static void stop() {

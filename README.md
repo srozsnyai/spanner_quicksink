@@ -193,6 +193,10 @@ sink.bigquery.dataset=target_dataset
 # Optional: Map Spanner table names to specific BigQuery tables
 sink.bigquery.table.Users=RawUsers
 sink.bigquery.table.Orders=RawOrders
+# Optional: Max rows per batch to insert (default: 500)
+sink.bigquery.batchSize=500
+# Optional: Number of parallel writer threads (default: 4)
+sink.bigquery.parallelism=4
 ```
 
 **State Reconstruction (Deduplication)**:
