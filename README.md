@@ -7,6 +7,23 @@ The app supports the option of using ordering events to ensure transactions can 
 
 > **Disclaimer**: This tool is provided "as-is" for development, testing, and debugging purposes. It is **not** intended for critical production workloads or strict SLA environments. Use at your own risk.
 
+## Table of Contents
+- [Use Cases](#use-cases)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Build and Run](#build-and-run)
+- [Quickstart](#quickstart)
+- [Configuration](#configuration)
+    - [1. Basic Connection](#1-basic-connection)
+    - [2. Sink Options](#2-sink-options)
+    - [3. Event Ordering (Buffer)](#3-event-ordering-buffer)
+    - [4. Console Logging](#4-console-logging)
+- [Spanner Sink Performance](#spanner-sink---performance-remarks--considerations)
+- [Metrics](#5-metrics)
+- [Troubleshooting](#troubleshooting)
+- [Running End-to-End Tests](#running-end-to-end-tests)
+
+
 ### Use Cases
 - Dumping Spanner ChangeStream events to files for development, debugging & investigation
 - Replicating tables between Spanner databases & instances
