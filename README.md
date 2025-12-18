@@ -282,3 +282,14 @@ The application outputs real-time metrics every 2 seconds to help you monitor th
 - **INVALID_ARGUMENT (start_timestamp)**: If you see an error about `start_timestamp` validation, the tool usually auto-detects this and retries with the correct timestamp.
 - **ALREADY_EXISTS**: The Spanner sink uses `INSERT OR UPDATE` (UPSERT) to handle replaying data safely.
 - **No Data**: Ensure your `startOffsetMinutes` (default 1) covers the time when data was written. Spanner Change Streams are real-time; standard queries won't see historical data unless you use a snapshot.
+
+### Running End-to-End Tests
+
+Integration tests (`SpannerSystemTest`) require a real GCP Project and Spanner Instance. You **must** provide these credentials via system properties as they are not hardcoded.
+
+Run the test using Maven:
+
+```bash
+mvn test -Dtest=SpannerSystemTest -Dtest.projectId=<your-project-id> -Dtest.instanceId=<your-instance-id>
+```
+
