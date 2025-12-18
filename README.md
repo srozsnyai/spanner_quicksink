@@ -287,9 +287,15 @@ The application outputs real-time metrics every 2 seconds to help you monitor th
 
 Integration tests (`SpannerSystemTest`) require a real GCP Project and Spanner Instance. You **must** provide these credentials via system properties as they are not hardcoded.
 
-Run the test using Maven:
+For Spanner Sink validation:
 
 ```bash
 mvn test -Dtest=SpannerSystemTest -Dtest.projectId=<your-project-id> -Dtest.instanceId=<your-instance-id>
+```
+
+For BigQuery Sink validation:
+
+```bash
+mvn test -Dtest=BigQuerySystemTest -Dtest.projectId=<your-project-id> -Dtest.instanceId=<your-instance-id> -Dtest.bqDataset=<your-bq-dataset>
 ```
 
